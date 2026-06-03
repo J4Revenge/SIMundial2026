@@ -134,6 +134,8 @@
       state.groups[g].forEach(function (id, i) {
         html += '<div class="srow p' + i + '" data-id="' + id + '">' +
           '<span class="handle" title="trascina">⠿</span>' +
+          '<button class="arr-btn arr-up" type="button" title="Su">▲</button>' +
+          '<button class="arr-btn arr-dn" type="button" title="Giù">▼</button>' +
           '<span class="pos">' + (i + 1) + "</span>" +
           '<span class="name" contenteditable="true" spellcheck="false" data-id="' + id + '">' + esc(teamName(id)) + "</span>" +
           '<span class="qtag">' + QSYM[i] + "</span></div>";
@@ -149,6 +151,24 @@
       });
     });
     wireNames(grid);
+    if (!grid._arrBound) {
+      grid._arrBound = true;
+      grid.addEventListener("click", function (e) {
+        var btn = e.target.closest(".arr-btn");
+        if (!btn) return;
+        var row = btn.closest(".srow");
+        var body = btn.closest(".gcard-body");
+        var rows = Array.prototype.slice.call(body.querySelectorAll(".srow"));
+        var ids = rows.map(function (r) { return r.dataset.id; });
+        var idx = rows.indexOf(row);
+        var swap = btn.classList.contains("arr-up") ? idx - 1 : idx + 1;
+        if (swap < 0 || swap >= ids.length) return;
+        var tmp = ids[idx]; ids[idx] = ids[swap]; ids[swap] = tmp;
+        state.groups[body.dataset.g] = ids;
+        save(); renderGroups(); renderThirds();
+        if (state.tab === "bracket") { cleanupWinners(); renderBracket(); }
+      });
+    }
   }
 
   function wireNames(scope) {
@@ -173,6 +193,8 @@
       var qual = i < 8;
       html += '<div class="trow ' + (qual ? "qual" : "out") + '" data-id="' + g + '">' +
         '<span class="handle">⠿</span>' +
+        '<button class="arr-btn arr-up" type="button" title="Su">▲</button>' +
+        '<button class="arr-btn arr-dn" type="button" title="Giù">▼</button>' +
         '<span class="rank">' + (i + 1) + "</span>" +
         '<span class="gtag">3' + g + "</span>" +
         '<span class="tname">' + esc(teamName(id)) + "</span>" +
@@ -182,6 +204,22 @@
     makeSortable(list, ".trow", function (ids) {
       state.thirds = ids; save(); renderThirds(); if (state.tab === "bracket") { cleanupWinners(); renderBracket(); }
     });
+    if (!list._arrBound) {
+      list._arrBound = true;
+      list.addEventListener("click", function (e) {
+        var btn = e.target.closest(".arr-btn");
+        if (!btn) return;
+        var row = btn.closest(".trow");
+        var rows = Array.prototype.slice.call(list.querySelectorAll(".trow"));
+        var ids = rows.map(function (r) { return r.dataset.id; });
+        var idx = rows.indexOf(row);
+        var swap = btn.classList.contains("arr-up") ? idx - 1 : idx + 1;
+        if (swap < 0 || swap >= ids.length) return;
+        var tmp = ids[idx]; ids[idx] = ids[swap]; ids[swap] = tmp;
+        state.thirds = ids; save(); renderThirds();
+        if (state.tab === "bracket") { cleanupWinners(); renderBracket(); }
+      });
+    }
   }
 
   /* ================= RENDER: BRACKET ================= */
