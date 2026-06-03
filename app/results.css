@@ -1,6 +1,7 @@
 /* ===== Versione Risultati — match list + computed standings ===== */
-#panel-risultati { display: none; grid-template-columns: minmax(0,1fr) 430px; height: 100%; }
-#panel-risultati.active { display: grid; }
+#panel-risultati { display: none; height: 100%; }
+#panel-risultati.active { display: grid; grid-template-columns: 1fr; }
+#panel-risultati.active.standings-open { grid-template-columns: minmax(0,1fr) 430px; }
 
 .matches-scroll { overflow: auto; padding: 18px 22px 70px; }
 .matches-head { display: flex; align-items: center; gap: 14px; margin: 2px 2px 16px; flex-wrap: wrap; }
@@ -44,8 +45,15 @@
 .score input.filled { border-color: oklch(0.80 0.16 150 / 0.5); }
 .score .dash { color: var(--faint); font-weight: 700; }
 
-/* ===== standings rail ===== */
-.standings-rail { border-left: 1px solid var(--line); background: var(--bg2); display: flex; flex-direction: column; min-height: 0; }
+/* ===== standings rail: nascosta, aperta col toggle ===== */
+.standings-rail { border-left: 1px solid var(--line); background: var(--bg2); display: none; flex-direction: column; min-height: 0; }
+#panel-risultati.standings-open .standings-rail { display: flex; }
+
+/* Bottone classifiche: evidenziato quando aperto */
+.btn-standings { white-space: nowrap; }
+#panel-risultati.standings-open .btn-standings {
+  background: var(--brand); border-color: var(--brand); color: oklch(0.99 0 0);
+}
 .standings-head { padding: 16px 16px 13px; border-bottom: 1px solid var(--line); }
 .standings-head h2 { margin: 0; font-family: "Saira Condensed"; font-weight: 800; font-size: 19px; letter-spacing: 0.03em; text-transform: uppercase; }
 .standings-head p { margin: 6px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.4; }
@@ -85,14 +93,14 @@
 .empty-note { color: var(--faint); font-size: 12px; font-style: italic; padding: 8px 2px; }
 
 @media (max-width: 1120px) {
-  #panel-risultati.active { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
-  .standings-rail { border-left: 0; border-top: 1px solid var(--line); max-height: 48vh; }
+  #panel-risultati.active.standings-open { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+  #panel-risultati.standings-open .standings-rail { border-left: 0; border-top: 1px solid var(--line); max-height: 48vh; }
 }
 
 /* ---- Mobile ≤ 640px ---- */
 @media (max-width: 640px) {
   .matches-scroll { padding: 12px 10px 40px; }
-  .standings-rail { max-height: 42vh; }
+  #panel-risultati.standings-open .standings-rail { max-height: 42vh; border-left: 0; border-top: 1px solid var(--line); }
 
   /* Intestazione: wrap naturale su mobile */
   .matches-head   { gap: 6px; margin-bottom: 12px; }

@@ -271,10 +271,16 @@
   $("#tab-risultati").addEventListener("click", function () { setTab("risultati"); });
   $("#tab-bracket").addEventListener("click", function () { setTab("bracket"); });
   $("#matches-list").addEventListener("input", onScoreInput);
+
+  $("#btn-standings").addEventListener("click", function () {
+    $("#panel-risultati").classList.toggle("standings-open");
+  });
+
   $("#btn-reset").addEventListener("click", function () {
     if (!confirm("Azzerare tutti i risultati inseriti e il tabellone?")) return;
     try { localStorage.removeItem(STORE); } catch (e) {}
     state = defaults(); recompute(); cleanupWinners();
+    $("#panel-risultati").classList.remove("standings-open");
     renderMatches(); renderStandings(); renderProgress(); setTab("risultati");
   });
 
