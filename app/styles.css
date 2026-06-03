@@ -143,11 +143,9 @@ button { font-family: inherit; color: inherit; }
   border: 1px solid var(--line);
 }
 .srow .name {
-  flex: 1; min-width: 0; font-weight: 600; font-size: 14.5px; outline: none;
-  border-radius: 5px; padding: 2px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1; min-width: 0; font-weight: 600; font-size: 14.5px;
+  padding: 2px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.srow .name:focus { background: var(--bg4); box-shadow: 0 0 0 2px var(--run); overflow: visible; }
-.srow .name:empty::before { content: attr(data-ph); color: var(--faint); }
 .srow .qtag { flex: 0 0 auto; font-size: 9.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 6px; border-radius: 4px; }
 
 .srow.p0 { border-left: 3px solid var(--win); }
@@ -273,6 +271,15 @@ button { font-family: inherit; color: inherit; }
 .arr-btn:active { color: var(--text); transform: scale(1.15); }
 .arr-btn:disabled { opacity: 0.2; cursor: default; }
 
+/* ---- Sub-nav gironi (nascosta su desktop) ---- */
+.gironi-subnav { display: none; }
+
+/* ---- Bracket hint (nascosto su desktop) ---- */
+.bracket-hint { display: none; }
+
+/* bracket-scroll: contenitore neutro su desktop, scroll su mobile */
+.bracket-scroll { display: block; }
+
 /* ---- Mobile ≤ 640px ---- */
 @media (max-width: 640px) {
   body { font-size: 14px; }
@@ -300,14 +307,41 @@ button { font-family: inherit; color: inherit; }
   .ver-switch a { padding: 5px 8px; font-size: 10px; letter-spacing: 0.02em; }
   .btn          { padding: 6px 10px; font-size: 11px; }
 
-  /* Gironi */
-  .groups-scroll { padding: 12px 12px 40px; }
+  /* Gironi: layout flex column con subnav */
+  #panel-gironi, #panel-gironi.active {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .gironi-subnav {
+    display: flex;
+    flex-shrink: 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+  }
+  .subtab {
+    flex: 1; padding: 11px 8px;
+    font-family: "Saira Condensed", sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted);
+    background: none; border: none; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .12s, border-color .12s;
+  }
+  .subtab.active { color: var(--text); border-bottom-color: var(--brand); }
+
+  /* Sezioni gironi: nascoste di default, visibili quando active */
+  .groups-scroll { display: none; flex: 1; min-height: 0; overflow: auto; padding: 12px 12px 40px; }
+  .thirds-rail   { display: none; flex: 1; min-height: 0; overflow: hidden; border: none; max-height: none; }
+  .groups-scroll.subtab-active { display: block; }
+  .thirds-rail.subtab-active   { display: flex; }
+
+  /* Griglia e componenti gironi */
   .groups-grid   { gap: 10px; grid-template-columns: 1fr; }
   .section-head  { flex-direction: column; gap: 3px; margin-bottom: 10px; }
   .section-head h2 { font-size: 19px; }
   .gcard-hint    { display: none; }
   .thirds-head   { padding: 12px 14px 10px; }
-  .thirds-rail   { max-height: 42vh; }
 
   /* Srow: nascondi handle, mostra frecce */
   .srow          { gap: 7px; padding: 8px 10px; }
@@ -318,13 +352,22 @@ button { font-family: inherit; color: inherit; }
   .trow          { gap: 7px; padding: 7px 9px; }
   .trow .handle  { display: none; }
 
-  /* Bracket: hint scroll orizzontale */
-  .bracket-inner::before {
-    content: "← scorri per vedere il tabellone →";
-    display: block;
-    font-size: 11px; color: var(--faint); letter-spacing: 0.04em;
-    padding-bottom: 12px; text-align: center;
+  /* Bracket: hint sticky + scroll separato */
+  #panel-bracket {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
+  .bracket-hint {
+    display: block;
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 11px; color: var(--faint); text-align: center;
+    letter-spacing: 0.04em; border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .bracket-scroll { flex: 1; min-height: 0; overflow: auto; height: auto; }
+
   .side .tm   { font-size: 12.5px; }
   .side .seed { font-size: 10px; }
 }

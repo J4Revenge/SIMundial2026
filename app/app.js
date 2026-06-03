@@ -36,7 +36,7 @@
   var saveT = null;
   function save() { clearTimeout(saveT); saveT = setTimeout(function () { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }, 120); }
 
-  function teamName(id) { return id == null ? null : (state.names[id] != null && state.names[id] !== "" ? state.names[id] : id); }
+  function teamName(id) { return id == null ? null : (WC.teamNames[id] || id); }
 
   /* ---------- third-placed combination logic ---------- */
   function qualifiedSet() { return state.thirds.slice(0, 8); }
@@ -137,7 +137,7 @@
           '<button class="arr-btn arr-up" type="button" title="Su">▲</button>' +
           '<button class="arr-btn arr-dn" type="button" title="Giù">▼</button>' +
           '<span class="pos">' + (i + 1) + "</span>" +
-          '<span class="name" contenteditable="true" spellcheck="false" data-id="' + id + '">' + esc(teamName(id)) + "</span>" +
+          '<span class="name">' + esc(teamName(id)) + "</span>" +
           '<span class="qtag">' + QSYM[i] + "</span></div>";
       });
       html += "</div></div>";
@@ -150,7 +150,6 @@
         save(); renderGroups(); renderThirds(); if (state.tab === "bracket") { cleanupWinners(); renderBracket(); }
       });
     });
-    wireNames(grid);
     if (!grid._arrBound) {
       grid._arrBound = true;
       grid.addEventListener("click", function (e) {
@@ -357,11 +356,26 @@
   $("#tab-gironi").addEventListener("click", function () { setTab("gironi"); });
   $("#tab-bracket").addEventListener("click", function () { setTab("bracket"); });
 
+  /* ================= SUB-TAB GIRONI (mobile) ================= */
+  function setSubTab(t) {
+    var gs = document.querySelector(".groups-scroll");
+    var tr = document.querySelector(".thirds-rail");
+    gs.classList.toggle("subtab-active", t === "groups");
+    tr.classList.toggle("subtab-active", t === "thirds");
+    document.querySelectorAll(".subtab").forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.panel === t);
+    });
+  }
+  document.querySelectorAll(".subtab").forEach(function (btn) {
+    btn.addEventListener("click", function () { setSubTab(btn.dataset.panel); });
+  });
+  setSubTab("groups");
+
   $("#btn-reset").addEventListener("click", function () {
-    if (!confirm("Azzerare tutte le selezioni e i nomi delle squadre?")) return;
+    if (!confirm("Azzerare tutte le selezioni?")) return;
     try { localStorage.removeItem(STORE); } catch (e) {}
     state = defaults();
-    renderGroups(); renderThirds(); setTab("gironi");
+    renderGroups(); renderThirds(); setTab("gironi"); setSubTab("groups");
   });
 
   /* ================= INIT ================= */
