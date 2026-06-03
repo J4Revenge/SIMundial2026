@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabellone Mondiali 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app/styles.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand-block">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-title">Mondiali <b>2026</b></div>
+        <div class="brand-sub">Tabellone Interattivo · 48 Squadre</div>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab" id="tab-gironi"><span class="step">01</span>Gironi</button>
+      <button class="tab" id="tab-bracket"><span class="step">02</span>Eliminazione Diretta</button>
+    </nav>
+    <div class="spacer"></div>
+    <div class="actions">
+      <div class="ver-switch">
+        <a href="index.html" class="on">Selezioni</a>
+        <a href="risultati.html">Risultati</a>
+      </div>
+      <button class="btn danger" id="btn-reset">Azzera</button>
+    </div>
+  </header>
+
+  <!-- TAB 1: GIRONI -->
+  <section class="panel" id="panel-gironi">
+    <div class="groups-scroll">
+      <div class="section-head">
+        <h2>Fase a gironi</h2>
+        <p>Trascina le squadre per stabilire 1ª, 2ª e 3ª posizione di ogni girone. La 4ª è eliminata.</p>
+      </div>
+      <div class="groups-grid" id="groups-grid"></div>
+    </div>
+    <aside class="thirds-rail">
+      <div class="thirds-head">
+        <h2>Migliori terze</h2>
+        <p>Classifica le 12 terze classificate: le prime 8 si qualificano ai sedicesimi. L'insieme delle 8 determina gli accoppiamenti secondo le 495 combinazioni ufficiali.</p>
+        <span class="count">8 / 8 qualificate</span>
+      </div>
+      <div class="thirds-list" id="thirds-list"></div>
+    </aside>
+  </section>
+
+  <!-- TAB 2: ELIMINAZIONE DIRETTA -->
+  <section class="panel" id="panel-bracket">
+    <div class="bracket-inner">
+      <div class="bracket-stage" id="bracket-stage"></div>
+    </div>
+  </section>
+</div>
+
+<script src="data/combos.js"></script>
+<script src="data/static.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>

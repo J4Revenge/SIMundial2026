@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabellone Mondiali 2026 — Risultati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app/styles.css">
+<link rel="stylesheet" href="app/results.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand-block">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-title">Mondiali <b>2026</b></div>
+        <div class="brand-sub">Tabellone dai Risultati · 48 Squadre</div>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab" id="tab-risultati"><span class="step">01</span>Risultati Gironi</button>
+      <button class="tab" id="tab-bracket"><span class="step">02</span>Eliminazione Diretta</button>
+    </nav>
+    <div class="spacer"></div>
+    <div class="actions">
+      <div class="ver-switch">
+        <a href="index.html">Selezioni</a>
+        <a href="risultati.html" class="on">Risultati</a>
+      </div>
+      <button class="btn danger" id="btn-reset">Azzera</button>
+    </div>
+  </header>
+
+  <!-- TAB 1: RISULTATI GIRONI -->
+  <section class="panel" id="panel-risultati">
+    <div class="matches-scroll">
+      <div class="matches-head">
+        <h2>Partite della fase a gironi</h2>
+        <p>Inserisci il punteggio di ogni partita: classifiche e tabellone si generano da soli.</p>
+        <div class="prog">
+          <span class="lbl" id="prog-lbl">0 / 72 partite</span>
+          <div class="bar"><div class="fill" id="prog-fill"></div></div>
+        </div>
+      </div>
+      <div class="matches-list" id="matches-list"></div>
+    </div>
+    <aside class="standings-rail">
+      <div class="standings-head">
+        <h2>Classifiche in tempo reale</h2>
+        <p>Calcolate con i criteri FIFA: punti, differenza reti, gol fatti, poi scontri diretti. Le prime 8 migliori terze si qualificano.</p>
+      </div>
+      <div class="standings-scroll" id="standings-scroll"></div>
+    </aside>
+  </section>
+
+  <!-- TAB 2: ELIMINAZIONE DIRETTA -->
+  <section class="panel" id="panel-bracket">
+    <div class="bracket-inner">
+      <div class="bracket-stage" id="bracket-stage"></div>
+    </div>
+  </section>
+</div>
+
+<script src="data/combos.js"></script>
+<script src="data/static.js"></script>
+<script src="data/fixtures.js"></script>
+<script src="app/app-results.js"></script>
+</body>
+</html>
