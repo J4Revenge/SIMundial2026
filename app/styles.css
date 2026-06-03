@@ -307,8 +307,8 @@ button { font-family: inherit; color: inherit; }
   .ver-switch a { padding: 5px 8px; font-size: 10px; letter-spacing: 0.02em; }
   .btn          { padding: 6px 10px; font-size: 11px; }
 
-  /* Gironi: layout flex column con subnav */
-  #panel-gironi, #panel-gironi.active {
+  /* Gironi: layout flex column con subnav (solo quando attivo) */
+  #panel-gironi.active {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -352,8 +352,8 @@ button { font-family: inherit; color: inherit; }
   .trow          { gap: 7px; padding: 7px 9px; }
   .trow .handle  { display: none; }
 
-  /* Bracket: hint sticky + scroll separato */
-  #panel-bracket {
+  /* Bracket: hint sticky + scroll separato (solo quando attivo) */
+  #panel-bracket.active {
     overflow: hidden;
     display: flex;
     flex-direction: column;
